@@ -1,0 +1,74 @@
+<ContentPage xslns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x:="http://shemas.microsoft.com/winfx/2009/xaml"
+            x:Class="MauiAppFit.Views.ListaAtividades"
+            Title="ListaAtividades"
+            x:Name="Pagina">
+
+
+    <ContentePage.TollbarItems>
+        <ToolbarItem Text="Atualizar"
+                     InconImageSource="{OnPlataform Android=refresh24}"
+                     Command="{Binding AtualizarLista}"
+                     Order="Primary"/>
+    </ContentePage.TollbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <SearchBar Placeholder="Busque por Descrição"
+                         Text="{Binding ParametroBusca}" />
+                <Button Text ="Buscar" Command="{Binding Buscar}" />
+            </StackLayout>
+
+            <RefreshView 
+                IsRefreshing="{Binding EstaAtualizando, Mode=OneWay}"
+                            Comand="{Binding AtuakizarLista}">
+
+                <ListView ItemsSource="{ninding ListaAtividades}">
+
+                    <ListView.Header>
+                        <Grid RowDefinitions="Auto"
+                          ColumnDefinitions="*,*,*">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Id"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="Descrição"/>
+                            <Label Grid.Row="0" Grid.Column="2" Text="Data"/>
+                        </Grid>
+                    </ListView.Header>
+
+                    <ListaView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Text ="Detalhes" 
+                                              Comand="{Binding Source={x:Reference Pagina}, Path=BindingContext.AbrirDetalhesAtividade}" ComandParameter="{Binding Id}" />
+                                    <MenuItem Text ="Excluir" 
+                                              Comand="{Binding Source={x:Reference Pagina}, Path=BindingContext.Remover}" ComandParameter="{Binding Id}" />
+
+                                </ViewCell.ContextActions>
+                                <Grid RowDefinitions="Auto"
+                                      ColumnDefinitions="*,*,*">
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                           Text="{Binding Id}" />
+                                    <Label Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding Descricao}" />
+                                    <Label Grid.Row="0" Grid.Column="2"
+                                           Text="{Binding Data, StringFormat='{}{0;dd/MM/yyyy}'}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListaView.ItemTemplate>
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+
+
+
+
+
+
+
+
+
+
+</ContentPage>
+

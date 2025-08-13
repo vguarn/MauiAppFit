@@ -22,9 +22,9 @@ namespace MauiAppFit.Helpers
         }
         
         public Task<Atividade> GetById(int id)
-         {
+        {
             return _db.Table<Atividade>().FirstAsync(int => int.Id == id);
-         }
+        }
 
         public Task<int> Insert(Atividade model)
         {
@@ -45,5 +45,17 @@ namespace MauiAppFit.Helpers
             );
 
         }
+    public Task<int> Delete(int id)
+    {
+        return _db.Table<Atividade>().DeleteAsync(i => i.Id == id);
+    }
+
+    public Task<List<Atividade>> Search(string q)
+    {
+        string sql = "SELECT * FROM Atividade WHERE Descricao LIKE '%'" + q + "'%'";
+        return _db.QueryAsync<Atividade>(sql);
+    }
+
+
 }
-}
+
